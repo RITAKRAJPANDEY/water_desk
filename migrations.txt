@@ -1,0 +1,33 @@
+-- migration database with all the tables for this project 
+
+CREATE DATABASE ganga_v1;
+
+--enter the database to create the tables 
+
+\c ganga_v1
+
+--make the gov_users table 
+
+CREATE TABLE gov_users(
+id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+username TEXT NOT NULL,
+password_hash TEXT NOT NULL,
+created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE UNIQUE INDEX idx_gov_users_username ON gov_users(username);
+
+--create table for refresh_tokens
+
+CREATE TABLE refresh_tokens(
+id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+user_id UUID NOT NULL,
+token_hash text NOT NULL,
+revoked BOOLEAN DEFAULT FALSE,
+expires_at TIMESTAMPTZ DEFAULT (NOW()+ INTERVAL '31 days'),
+created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+--create required indexes and adding foreignkeys
+
+ALTER TABLE refresh_tokens ADD CONSTRAINT fk_refresh_tokens_user_id FOREIGN KEY (user_id) REFERENCES gov_users(id) ON DELETE CASCADE; 
