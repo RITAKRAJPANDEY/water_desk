@@ -1,5 +1,3 @@
-import { BadRequest } from "../errors/badRequest"
-
 export const postSignUp = async(data)=>{
    
         const res= await  fetch('/api/auth/signup',{
@@ -9,10 +7,10 @@ export const postSignUp = async(data)=>{
             },
             body:JSON.stringify(data)
         })
+        const result = await res.json();
         if(!res.ok){
-            throw new BadRequest("unable to signup try again");
+            throw new Error(result.message||"Unable to signUp ");
         }
-   const result = await res.json();
    return result;
 }
 
@@ -25,8 +23,9 @@ export const postLogin = async(data)=>{
         body:JSON.stringify(data),
         credentials:'include',
     });
+    const result = await res.json();
     if(!res.ok){
-        throw new BadRequest('Unable to Login')
+        throw new Error(result.message|| "unable to Login");
     }
-    return await res.json();
+    return  result;
 }

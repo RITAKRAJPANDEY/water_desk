@@ -7,7 +7,7 @@ export default function Login(){
     password:'',
     username:''
    }
-   
+
    const [login,setLogin]=useState(initialState);
    const [error,setError]=useState(null);
    const handelChange=(e)=>{
@@ -44,7 +44,7 @@ export default function Login(){
             <form onSubmit={handleSubmit} className="flex grid  flex-col-4 gap-1">
                 <input placeholder="username" value={login.username} name="username" onChange={handelChange} className="text-white p-2 m-2 border border-gray-600 rounded hover:scale-103 hover:brightness-120" />
                 <input placeholder="password" type="password" value={login.password} name="password" onChange={handelChange} className="text-white p-2 m-2 border border-gray-600 rounded hover:scale-103 hover:brightness-120" />
-                <button className="text-black bg-white px-3 py-1.5 hover:shadow-md w-fix mx-auto active:scale-95 rounded border border-black">Login</button>
+                <button type="submit" className="text-black bg-white px-3 py-1.5 hover:shadow-md w-fix mx-auto active:scale-95 rounded border border-black">Login</button>
                 <div className="flex px-12">
                 <pre className="text-gray-500"> dont have an account </pre>
                 <Link className="text-yellow-400 hover:underline" href={'/signup'}>signUp ?</Link>

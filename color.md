@@ -5,8 +5,8 @@ Accent: [#A855F7]
 Text: [#E2E8F0]
 Muted: [#94A3B8]
 
-Background: [#0B0F19] #0B0F19
-Surface: [#111827] #111827
+Background: [#0B0F19] #393c43
+Surface: [#111827] #33373f
 Primary: [#8B5CF6] #491ab5
 Accent: [#06B6D4] #06B6D4
 Text: [#E5E7EB]  #E5E7EB

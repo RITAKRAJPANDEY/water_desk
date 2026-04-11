@@ -3,8 +3,11 @@
 import Link from "next/link";
 import { useState } from "react";
 import {postSignUp} from "../services/auth.services"
+import { useRouter } from "next/navigation";
+
 
 export default function SignUp() {
+    const router =useRouter();
 const initialState={
     username:'',
     password:'',
@@ -14,6 +17,8 @@ const initialState={
 const [signUp,setSignUp]=useState(initialState);
 
 const [error,setError]=useState(null);// to give custom error message to the user based on what they write 
+
+const[success,setSuccess]=useState(null);
 
 const handleChange=(e)=>{
     const {name,value}=e.target;
@@ -34,7 +39,10 @@ const handleSubmit=async(e)=>{
         }
     try{
         await  postSignUp(signUp);
+        setSuccess(`Account Created !! Welcome ${signUp.username} Redirecting...`)
         setSignUp(initialState);
+        setTimeout(()=>router.push('/login'),2000)
+        
     }catch(err){
         console.error(err);
         return setError(err.message||"unable to signUp");
@@ -42,12 +50,16 @@ const handleSubmit=async(e)=>{
 // main logic which uses the signup service to connect the frontend to the backend and make our system functional
 
 }
-    return <div className="flex  min-h-screen justify-center items-center">
+    return <div>
+        <p className="rounded flex px-135 py-8">{success&&<div className=" rounded text-black bg-white flex px-25 text-1xl">{success}</div>}</p>
+        <div className="flex  min-h-screen justify-center items-center">
         <div className="w-full border border-yellow-400 max-w-md bg-slate-900 p-8 rounded-xl shadow-lg">
+            
         <h2 className="text-2xl font-bold text-slate-200 text-center mb-6">
     Create Account
   </h2>
   {error&&<div className="text-red-400 flex px-25 text-1xl">{error}
+    
   </div>}
             <form onSubmit={handleSubmit} className="flex grid  flex-col-4 gap-1">
                 <input placeholder="username" value={signUp.username} onChange={handleChange} name="username" className="text-white p-2 m-2 border border-gray-600 rounded hover:scale-103 hover:brightness-120" />
@@ -63,5 +75,6 @@ const handleSubmit=async(e)=>{
                 </div>
             </form>
         </div>
+    </div>
     </div>
 }

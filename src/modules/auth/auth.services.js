@@ -70,7 +70,3 @@ export const rotateRefreshTokenService = async (refreshToken) => {
         throw err;
     }
 } 
-
-export const logoutUserService = () =>{
-   const revokeAllTokens = revokeAllTokensRepo()
-}
