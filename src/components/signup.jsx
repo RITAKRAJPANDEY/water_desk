@@ -9,16 +9,20 @@ const initialState={
     username:'',
     password:'',
     confirmPassword:''
-};
+};// being used by the signUp hook so that we can make an object out of the form data
+
 const [signUp,setSignUp]=useState(initialState);
-const [error,setError]=useState(null);
+
+const [error,setError]=useState(null);// to give custom error message to the user based on what they write 
+
 const handleChange=(e)=>{
     const {name,value}=e.target;
     setSignUp((prev)=>({
         ...prev,
         [name]:value
     }));
-}
+}// handels the change mainly stores the form data in key value pairs for the object
+
 const handleSubmit=async(e)=>{ 
     e.preventDefault();
    
@@ -33,10 +37,9 @@ const handleSubmit=async(e)=>{
         setSignUp(initialState);
     }catch(err){
         console.error(err);
-        return setError(err.message||"unable to signUp")
-    
-
+        return setError(err.message||"unable to signUp");
 }
+// main logic which uses the signup service to connect the frontend to the backend and make our system functional
 
 }
     return <div className="flex  min-h-screen justify-center items-center">
@@ -51,8 +54,8 @@ const handleSubmit=async(e)=>{
                 <input placeholder="password" type="password" value={signUp.password} onChange={handleChange} name="password" className="text-white p-2 m-2 border border-gray-600 rounded hover:scale-103 hover:brightness-120" />
                 <input type="password" placeholder="confirm password" value={signUp.confirmPassword} onChange={handleChange} name="confirmPassword" className="text-white p-2 m-2 rounded border border-gray-700 
                 hover:scale-102 hover:brightness-120" />
-                <div>
-                    <button type="submit" className="rounded border border-mg bg-white" >signUp</button>
+                <div className="px-39">
+                    <button type="submit"   className="rounded hover:shadow-md active:scale-95 border border-mg mx-auto w-fix px-3 py-2 bg-white" >signUp</button>
                 </div>
                 <div className="flex px-12">
                 <pre className="text-gray-500">already have an account </pre>
@@ -62,52 +65,3 @@ const handleSubmit=async(e)=>{
         </div>
     </div>
 }
-
-/**
- * import { useState } from "react"
-import {postBlog} from '@/services/blog.api';
-const initialState={
-    author:'',
-        title:'',
-        description:''
-}
-export default function Create (){
-    const [blog,setBlog]=useState(initialState);
-const handleChange=(e)=>{
-    const {name,value}=e.target;
-    setBlog((prev) => ({
-    ...prev,
-    [name]: value
-  }));}
-const handelSubmit=(e)=>{
-    e.preventDefault();
-    // console.log(blog);
-    const addData=async()=>{
-        try{
-            await postBlog(blog); 
-            setBlog(initialState);
-            
-     }catch(err){
-
-        console.error(err);
-        throw new Error("unable to post blog");
-     }
-    }
-    addData();
-}
-
-    return <div className="create">
-        <h2 className="text-2xl px-50 text-[#7b2cbf] ">Add A New Blog</h2>
-        <div className="flex flex-col gap-3 p-3 max-w-md" >
-            <form onSubmit={handelSubmit}>
-        <input  name="author" onChange={handleChange} value={blog.author} placeholder="enter your name "/>
-        <input name="title" onChange={handleChange} value={blog.title} placeholder="enter title"/>
-        <input name="description" onChange={handleChange} value={blog.description} placeholder="enter description"/>
-        <div>
-            <button type="submit"     className="active:scale-95 active:brightness-120 hover:shadow-md hover:bg-[#00b4d8] rounded p-1 bg-blue-300 flex mx-80">Add</button>
-        </div>
-        </form>
-        </div>
-    </div>
-}
- */

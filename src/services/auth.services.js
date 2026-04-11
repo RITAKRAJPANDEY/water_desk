@@ -15,3 +15,18 @@ export const postSignUp = async(data)=>{
    const result = await res.json();
    return result;
 }
+
+export const postLogin = async(data)=>{
+    const res = await fetch('/api/auth/login',{
+        method:"POST",
+        headers:{
+            "Content-Type":'application/json'
+        },
+        body:JSON.stringify(data),
+        credentials:'include',
+    });
+    if(!res.ok){
+        throw new BadRequest('Unable to Login')
+    }
+    return await res.json();
+}

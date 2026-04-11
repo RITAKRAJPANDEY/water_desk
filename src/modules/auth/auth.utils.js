@@ -7,9 +7,20 @@ export const hasher=async(password)=>{
 export const compareHash=async(password,hashedPassword)=>{
     return await bcrypt.compare(password,hashedPassword);
 }
-export const createAccessToken=(username)=>{
-    return jwt.sign({sub:username},process.env.ACCESSTOKENSECRET,{expiresIn:'15m'});
+export const createAccessToken=(id)=>{
+    return  jwt.sign({sub:id},process.env.ACCESSTOKENSECRET,{expiresIn:'15m'});
+}
+
+export const decodeToken=(token)=>{
+    try{
+    return jwt.verify(token,process.env.ACCESSTOKENSECRET);
+    }catch(err){
+        throw err;
+    }
 }
 export const createCryptoHash=()=>{
-    return  crypto.randomBytes('32').toString('hex');
+    return  crypto.randomBytes(32).toString('hex');
+}
+export const shaHash =(data)=>{
+    return crypto.createHash('sha256').update(data).digest('hex');
 }
