@@ -3,7 +3,7 @@
 import Link from "next/link";
 
 export default function Navbar(){
-    return <div className="flex items-centre justify-between bg-[#111827] p-4 ">
+    return <div className="flex sticky top-0 items-centre justify-between bg-[#111827] p-4 ">
         <h1 className="text-5xl px-3 ">
            <span className="text-violet-400">Water</span>
            <span className="text-slate-200">Desk</span> 

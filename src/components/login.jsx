@@ -10,13 +10,15 @@ export default function Login(){
 
    const [login,setLogin]=useState(initialState);
    const [error,setError]=useState(null);
+
    const handelChange=(e)=>{
-    const {name,value}=e.target;
-    setLogin((prev)=>({
+   const {name,value}=e.target;
+   setLogin((prev)=>({
         ...prev,
         [name]:value
     }));
    }
+   
    const handleSubmit=async(e)=>{
     e.preventDefault();
     try{
