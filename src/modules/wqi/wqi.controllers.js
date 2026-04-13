@@ -4,11 +4,9 @@ import { wqiDataService } from "./wqi.services";
 export const wqiDataController=async(location)=>{
     try{
         const data = await wqiDataService(location);
-        return NextResponse.json({
-            success:true,
-            location:data.location
-        })
+        return data;
     }catch(err){
+
         throw err;
     }
 }

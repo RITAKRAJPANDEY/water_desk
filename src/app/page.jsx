@@ -1,11 +1,15 @@
-'use client';
+// 'use client';
 import Navbar from '../components/navbar'
 import Hero from '../components/hero'
-export default function App(){
+import Cards from '../components/cards'
+export default  async function App({searchParams}){
+    const params = await  searchParams;
+    const locationQuery = params.location;
     return  <div className="app">
        <div className="home">
         <Navbar/>
-        <Hero/>
+        <Hero/> 
+        {locationQuery&&<Cards location={locationQuery}/>}
        </div>
     </div>
 }

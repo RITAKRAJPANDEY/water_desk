@@ -1,27 +1,20 @@
 'use client';
 
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function Hero() {
+    const router =useRouter();
     const [location, setLocation] = useState();
     const [error, setError] = useState();
-    const handleChange = async (e) => {
-        setLocation(e.target.value);
-    }
-
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        try {
-            setError("");
-            if (!location) {
-                setError('Enter location');
-                setTimeout(()=>setError(''),2000)
-            }
-            
-        } catch (err) {
-
+    const handleChange = async () => {
+        if(!location){
+            setError('Enter Location')
         }
+       router.push(`?location=${encodeURIComponent(location)}`);
     }
+
+   
 
     return <div className="hero">
         <div className="py-20">
@@ -31,10 +24,8 @@ export default function Hero() {
                 </h1>
             </div>
             <div className="flex justify-center gap-4 justify-between w-full py-20 ">
-                <form onSubmit={handleSubmit}>
-                    <input value={location} onChange={handleChange} name="location" className="bg-[#E5E7EB] text-2xl text-black rounded-md border px-30 border-black hover:scale-99" placeholder="Enter State / Location" ></input>
-                    <button type="submit" className="rounded-md cursor-pointer bg-black text-white p-2 border-2 border-black  hover:bg-[#393c43] active:scale-95">search</button>
-                </form>
+                    <input value={location} onChange={e=> setLocation(e.target.value)} name="location" className="bg-[#E5E7EB] text-2xl text-black rounded-md border px-30 border-black hover:scale-99" placeholder="Enter State / Location" ></input>
+                    <button type="submit" onClick={handleChange} className="rounded-md cursor-pointer bg-black text-white p-2 border-2 border-black  hover:bg-[#393c43] active:scale-95">search</button>
             </div>
             <div className="flex justify-center">
                 {error && <p className="text-red-400  bg-black rounded  p-2  ">{error}</p>}
