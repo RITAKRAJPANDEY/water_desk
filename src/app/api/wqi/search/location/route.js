@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { wqiDataController } from "../../../../../modules/wqi/wqi.controllers"
 
-export const GET = async (request) => {
+export const GET = async(request) => {
     try {
         const { searchParams } = new URL(request.url);
         const location = searchParams.get('location');

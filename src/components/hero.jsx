@@ -13,9 +13,6 @@ export default function Hero() {
         }
        router.push(`?location=${encodeURIComponent(location)}`);
     }
-
-   
-
     return <div className="hero">
         <div className="py-20">
             <div className="flex justify-center w-full">

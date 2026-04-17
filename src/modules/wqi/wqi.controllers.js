@@ -1,4 +1,3 @@
-import { NextResponse } from "next/server";
 import { wqiDataService } from "./wqi.services";
 
 export const wqiDataController=async(location)=>{
@@ -8,5 +7,13 @@ export const wqiDataController=async(location)=>{
     }catch(err){
 
         throw err;
+    }
+}
+
+export const wqiIdDetailsController = async(id)=>{
+    try{
+
+    }catch(err){
+
     }
 }

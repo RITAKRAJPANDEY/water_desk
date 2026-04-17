@@ -2,7 +2,9 @@
 import Link from "next/link";
 import { useState } from "react";
 import { postLogin } from "../services/auth.services";
+import { useRouter } from "next/navigation";
 export default function Login(){
+    const router = useRouter();
    const initialState={
     password:'',
     username:''
@@ -20,6 +22,7 @@ export default function Login(){
    }
    
    const handleSubmit=async(e)=>{
+   
     e.preventDefault();
     try{
         setError("");
@@ -31,6 +34,8 @@ export default function Login(){
         }
         await postLogin(login);
         setLogin(initialState);
+        router.push('/');
+
     }catch(err){
         console.error(err);
         setError(err.message || 'Login failed');
