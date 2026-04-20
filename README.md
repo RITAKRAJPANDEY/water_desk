@@ -1,17 +1,17 @@
 # Water Quality Index (WQI) Application
 
-A full-stack web application built with **Next.js 16**, **React 19**, and **PostgreSQL** to monitor and calculate water quality metrics. The application features secure user authentication, JWT-based token rotation, and a modular architecture following industry best practices.
+A full-stack web application built with **Next.js 16**, **React 19**, and **PostgreSQL** to monitor and visualize water quality metrics. The application features secure user authentication, comprehensive WQI data search, and interactive time series visualization with a modular architecture following industry best practices.
 
 ## 🎯 Project Overview
 
 The Water Quality Index application is designed to:
-- Provide user authentication with secure refresh token rotation
-- Store and manage water quality measurements and tests
-- Calculate water quality indices based on multiple parameters
-- Display real-time WQI data with visual indicators and color coding
+- Provide secure user authentication with JWT-based token management
+- Search and display water quality data by location or station code
+- Visualize WQI time series data with interactive charts
+- Calculate and display water quality indices based on environmental parameters
 - Ensure data security through JWT tokens and bcrypt password hashing
 
-**Current Status:** MVP (Authentication module complete, WQI calculation module in development)
+**Current Status:** Fully Functional MVP with authentication and WQI visualization modules complete
 
 ## 🏗️ Architecture Overview
 
@@ -22,36 +22,49 @@ water_quality_index/
 ├── src/
 │   ├── app/                  # Next.js App Router
 │   │   ├── api/              # API Routes
-│   │   │   └── auth/         # Authentication endpoints
+│   │   │   ├── auth/         # Authentication endpoints
+│   │   │   └── wqi/          # WQI data endpoints
+│   │   ├── details/[id]/     # WQI details page with charts
 │   │   ├── login/            # Login page
 │   │   ├── signup/           # Signup page
-│   │   └── layout.tsx        # Root layout
+│   │   ├── layout.tsx        # Root layout
+│   │   └── page.jsx          # Home page
 │   ├── components/           # React components
+│   │   ├── cards.jsx         # WQI data cards
+│   │   ├── details.jsx       # Time series chart component
+│   │   ├── hero.jsx          # Search interface
 │   │   ├── login.jsx         # Login form
-│   │   ├── signup.jsx        # Signup form
-│   │   └── navbar.jsx        # Navigation
+│   │   ├── navbar.jsx        # Navigation
+│   │   ├── renderCard.jsx    # Card rendering logic
+│   │   └── signup.jsx        # Signup form
 │   ├── modules/              # Business logic (MVC)
 │   │   ├── auth/            # Authentication module
 │   │   │   ├── auth.controller.js      # Route handlers
 │   │   │   ├── auth.services.js        # Business logic
 │   │   │   ├── auth.repositories.js    # Database queries
 │   │   │   ├── auth.utils.js           # Crypto utilities
-│   │   │   ├── auth.middleware.js      # Auth middleware
-│   │   │   └── auth.validator.js       # Input validation
+│   │   │   └── auth.middleware.js      # Auth middleware
 │   │   └── wqi/             # Water Quality Index module
-│   │       └── wai.controller.js       # WQI calculations
+│   │       ├── wqi.controllers.js      # WQI route handlers
+│   │       ├── wqi.repositories.js     # Database queries
+│   │       ├── wqi.services.js         # Business logic
+│   │       └── wqi.utils.js            # WQI calculations
 │   ├── services/             # External service integrations
+│   │   └── auth.services.js  # Frontend auth service
 │   ├── lib/                  # Utilities & configurations
 │   │   ├── db.js             # PostgreSQL connection pool
 │   │   ├── error-handler.js  # Global error handler
-│   │   └── validators/       # Input validation schemas
-│   └── errors/               # Custom error classes
-│       ├── appError.js       # Base error class
-│       ├── authError.js      # Auth-specific errors
-│       ├── badRequest.js     # 400 errors
-│       ├── forbidden.js      # 403 errors
-│       ├── notFound.js       # 404 errors
-│       └── serverError.js    # 500 errors
+│   │   └── validators/       # Input validation
+│   │       └── auth.validator.js       # Auth validation
+│   ├── errors/               # Custom error classes
+│   │   ├── appError.js       # Base error class
+│   │   ├── authError.js      # Auth-specific errors
+│   │   ├── badRequest.js     # 400 errors
+│   │   ├── forbidden.js      # 403 errors
+│   │   ├── notFound.js       # 404 errors
+│   │   └── serverError.js    # 500 errors
+│   └── utils/                # Shared utilities
+│       └── sharedutil.js     # Common utilities
 ├── public/                   # Static assets
 ├── next.config.ts            # Next.js configuration
 ├── tsconfig.json             # TypeScript configuration
@@ -171,17 +184,17 @@ water_quality_index/
 
 - **User Registration** - Secure signup with password hashing
 - **Login** - JWT-based user authentication
-- **Token Rotation** - Refresh token rotation with automatic revocation
+- **Token Management** - JWT access tokens with secure storage
 - **Password Security** - bcrypt hashing with salt rounds of 10
-- **Session Management** - 15-minute access token expiry, 7-day refresh token expiry
-- **Token Revocation** - Prevents token reuse through revocation tracking
+- **Session Management** - 15-minute access token expiry
 
-### 🚧 WQI Module (In Development)
+### ✅ WQI Data Visualization (Implemented)
 
-- Water quality parameter calculations
-- Index generation based on multiple metrics
-- Real-time data visualization
-- Historical trending
+- **Location Search** - Search WQI data by state or location name
+- **Station Details** - View detailed WQI information for specific stations
+- **Time Series Charts** - Interactive line charts showing WQI trends over time
+- **Data Cards** - Visual display of WQI data with color-coded indicators
+- **Real-time Data** - Live fetching and display of water quality metrics
 
 ## 🔑 Core Modules
 
@@ -308,33 +321,32 @@ git push origin feature/feature-name
 
 ## 🐛 Known Issues & TODOs
 
-### Bugs
-- [ ] Typo in `auth.controller.js`: "ture" should be "true" in `rotateRefreshTokenController`
-- [ ] Undefined function `ServiceWorker` called in `loginController` (should be `loginService`)
-- [ ] Undefined function `revokealluserrepo` in `auth.services.js`
-- [ ] Missing error handling in `verifyUserController`
+### Current Status
+- ✅ Authentication system fully implemented
+- ✅ WQI data search and visualization implemented
+- ✅ Time series charts implemented
+- ✅ Database integration working
 
-### Features to Complete
-- [ ] Implement logout endpoint
-- [ ] Complete WQI calculation module
-- [ ] Add form submission handlers in frontend components
-- [ ] Implement authentication middleware for route protection
-- [ ] Add input validation middleware
-- [ ] Create signup API endpoint
-- [ ] Implement email verification (future)
-- [ ] Add 2FA support (future)
-
-### Improvements Needed
-- [ ] Add comprehensive error handling to all endpoints
-- [ ] Implement request logging system
-- [ ] Add unit and integration tests
+### Minor Improvements Needed
+- [ ] Add comprehensive unit tests
+- [ ] Implement rate limiting for API endpoints
+- [ ] Add input validation middleware for all endpoints
 - [ ] Create API documentation (Swagger/OpenAPI)
-- [ ] Implement rate limiting
-- [ ] Add CORS configuration
-- [ ] Create .env.example file
-- [ ] Add database migration scripts
-- [ ] Implement request validation middleware
-- [ ] Add proper TypeScript types throughout
+- [ ] Add request logging system
+- [ ] Implement proper error boundaries in React components
+- [ ] Add loading states for better UX
+- [ ] Create .env.example file for easier setup
+- [ ] Add database seeding scripts for development
+- [ ] Implement data caching for better performance
+
+### Future Enhancements
+- [ ] Add user dashboard with saved searches
+- [ ] Implement data export functionality (CSV/PDF)
+- [ ] Add real-time notifications for WQI alerts
+- [ ] Create admin panel for data management
+- [ ] Add comparative analysis between locations
+- [ ] Implement advanced filtering and sorting
+- [ ] Add data visualization with multiple chart types
 
 ## 📋 API Usage Examples
 
