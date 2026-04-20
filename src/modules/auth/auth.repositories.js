@@ -38,7 +38,7 @@ export const storeNewRefreshToken = async ({ refreshToken,newRefreshToken, user_
             throw new AppError('INVALID_REFRESH_TOKEN', 401);
         };
 
-        const revokeToken= await client.query(`UPDATE refresh_tokens SET revoked = $1 , replaced_with=$2 WHERE token_hash =$3`,[true,newRefreshToken,refreshToken]);
+        const revokeToken= await client.query(`UPDATE refresh_tokens SET revoked = $1 , replaced_with = $2 WHERE token_hash = $3`,[true,newRefreshToken,refreshToken]);
 
         if(revokeToken.rowCount===0){
             throw new AppError('TOKEN ALREADY REVOKED ',401);

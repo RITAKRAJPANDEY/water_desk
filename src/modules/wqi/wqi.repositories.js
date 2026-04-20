@@ -13,3 +13,7 @@ export const  findLocationRepo = async(location)=>{
 
     return result.rows||null;
 }
+export const wqiDetailsRepo = async (station_code)=>{
+    const result = await pool.query(`SELECT id, station_code ,wqi FROM water_quality_timeseries WHERE station_code = $1`,[station_code]);
+    return result.rows||null;
+}

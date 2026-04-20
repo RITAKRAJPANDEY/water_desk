@@ -1,4 +1,4 @@
-import { wqiDataService } from "./wqi.services";
+import { wqiDataService, wqiIdDetailsService } from "./wqi.services";
 
 export const wqiDataController=async(location)=>{
     try{
@@ -10,10 +10,11 @@ export const wqiDataController=async(location)=>{
     }
 }
 
-export const wqiIdDetailsController = async(id)=>{
+export const wqiIdDetailsController = async(station_code)=>{
     try{
-
+        const data = await wqiIdDetailsService(station_code);
+        return data;
     }catch(err){
-
+        throw err;
     }
 }

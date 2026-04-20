@@ -3,8 +3,8 @@ import { wqiDataController } from "../../../../../modules/wqi/wqi.controllers"
 
 export const GET = async(request) => {
     try {
-        const { searchParams } = new URL(request.url);
-        const location = searchParams.get('location');
+        const location = request.nextUrl.searchParams.get('location');
+        console.log(location);
         if (!location) {
           return NextResponse.json(
                 { message: "Location parameter is required" }, 

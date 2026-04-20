@@ -5,8 +5,8 @@ import { useState } from "react";
 
 export default function Hero() {
     const router =useRouter();
-    const [location, setLocation] = useState();
-    const [error, setError] = useState();
+    const [location, setLocation] = useState("");
+    const [error, setError] = useState("");
     const handleChange = async () => {
         if(!location){
             setError('Enter Location')
