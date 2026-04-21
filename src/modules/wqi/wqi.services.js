@@ -1,6 +1,6 @@
 import { BadRequest } from "../../errors/badRequest";
 import { findLocationRepo, findStateRepo, wqiDetailsRepo } from "./wqi.repositories";
-import { computeWqiResult } from "./wqi.utils";
+import { computeWqiResult, getAlarmingParameters } from "./wqi.utils";
 
 export const wqiDataService = async (location) => {
     try {
@@ -33,8 +33,13 @@ export const wqiIdDetailsService = async (station_code) => {
         }
         return record.map((r)=>({
             stationCode:r.station_code,
+            time:r.recorded_at,
             id:r.id,
-            wqi:r.wqi
+            wqi:r.wqi,
+            ph:r.ph,
+            dissolved_oxygen:r.dissolved_oxygen,
+            bod:r.bod,
+            total_coliform:r.total_coliform
         }));
     } catch (err) {
         throw err;

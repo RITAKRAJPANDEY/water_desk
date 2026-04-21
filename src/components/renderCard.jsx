@@ -12,6 +12,7 @@ export const RenderCard = async ({ data }) => {
           <p className="text-3xl font-bold text-blue-600">{data.wqi}</p>
 
           <Link className="bg-black p-1 mx-auto my-auto text-white rounded-md   cursor:pointer " href={`/details/${data.station_code}`}>Details</Link>
+        
         </div>
         <p className="text-sm mt-2 font-semibold text-gray-700">Category: <span className="text-blue-500">{data.category}</span></p>
       </div>
