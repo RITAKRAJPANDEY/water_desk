@@ -4,10 +4,13 @@ import { useParams } from "next/navigation";
 import { useEffect } from "react";
 import { useState } from "react";
 import { formatXaxis } from "../utils/component.util";
+import Loader from "./loading";
 
 export default function Details() {
+    
     const { id: station_code } = useParams();
     const [chartData, setChartData] = useState([]);
+    const [isLoading,setIsLoading] = useState(true);
 
     useEffect(() => {
         const getData = async () => {
@@ -20,10 +23,17 @@ export default function Details() {
             }
         };
         if (station_code) getData();
+
+        const timer = setTimeout(()=>{
+            setIsLoading(false);
+        },1000);
+        return ()=>{
+            clearTimeout(timer);
+        }
     }, [station_code]);
 
-    if (!chartData || chartData.length === 0) {
-        return <div className="text-white p-4">Loading...</div>;
+    if (isLoading) {
+        return <div className="fixed inset-0 flex items-center justify-center h-screen w-screen  z-[9999]"> <Loader/></div>;
     }
 
     return (
@@ -31,7 +41,7 @@ export default function Details() {
             <h2 className="text-white text-xl mb-4">WQI For {station_code}</h2>
             <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={chartData}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#444" />
+                    <CartesianGrid strokeDasharray="3 3" stroke="#545454" />
                     <XAxis dataKey="time" tickFormatter={formatXaxis} minTickGap={30} stroke="#f38006" />
                     <YAxis  yAxisId="left" label={{value:'wqi', angle:-90,  position:'outsideLeft'}} stroke="#f38006" />
                     <YAxis  yAxisId="right" orientation="right" domain={[6, 9]} label={{value:'', angle:90,  position:'insideRight'}} stroke="#f38006" />
