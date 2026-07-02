@@ -1,0 +1,6 @@
+node_modules
+.next
+pnpm-debug.log
+.env
+.git
+pnpm-workspace.yaml

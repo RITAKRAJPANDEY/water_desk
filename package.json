@@ -2,6 +2,9 @@
   "name": "water_quality_index",
   "version": "0.1.0",
   "private": true,
+  "workspaces": [
+    "src"
+  ],
   "scripts": {
     "dev": "next dev",
     "build": "next build",

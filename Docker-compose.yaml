@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - DB_USER=rpsfv
+      - DB_NAME=ganga_v1
+      - DB_PORT=5432
+      - DB_HOST=db
+      - DB_PASSWORD=postgres123
+      - ACCESSTOKENSECRET=askdhfpoioweyhtehfksdhfgohfweoifnfw98hfowijf908hf028foidf0a808hh
+      - PGPOO_LMAX=10
+      - PGPOOL_TIMEOUT=30000
+    depends_on:
+      db:
+        conditions: service_healthy
+  db:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_USER=rpsfv
+      - POSTGRES_PASSWORD=postgres123
+      - POSTGRES_DB=ganga_V1
+    ports:
+      - "5432:5432"
+    volumes:
+        - pgdata:/var/lib/postgresql/data
+        - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+
