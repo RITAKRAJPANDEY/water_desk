@@ -25,6 +25,8 @@ ENV DB_ROUNDS=12
 ENV PG_POOL_MAX=10
 ENV PG_POOL_TIMEOUT=30000
 
+RUN pnpm build
+
 #the main runner 
 FROM node:20-alpine AS runner
 WORKDIR /app
@@ -33,8 +35,8 @@ ENV NODE_ENV=production
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
-RUN addgroup --system -gid 1001 nodejs
-RUN adduser --system -uid 1001 nextjs
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
 
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static

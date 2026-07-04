@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   web:
@@ -16,18 +16,23 @@ services:
       - PGPOOL_TIMEOUT=30000
     depends_on:
       db:
-        conditions: service_healthy
+        condition: service_healthy
   db:
     image: postgres:15-alpine
     environment:
       - POSTGRES_USER=rpsfv
       - POSTGRES_PASSWORD=postgres123
-      - POSTGRES_DB=ganga_V1
+      - POSTGRES_DB=ganga_v1
     ports:
       - "5432:5432"
     volumes:
         - pgdata:/var/lib/postgresql/data
-        - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+        - ./gangainit.sql:/docker-entrypoint-initdb.d/gangainit.sql
     healthcheck:
-      test: []
+      test: ["CMD-SHELL","pg_isready -U rpsfv -d ganga_v1"]
+      interval: 5s 
+      timeout: 5s
+      retries: 5
+volumes:
+  pgdata:
 
